@@ -59,7 +59,7 @@ public class ServerTwo {
                     total = (int) Math.pow(firstNumber, secondNumber);
                     break;
                 case 'r':
-                    total: Math.sqrt(firstNumber);
+                    total = Math.sqrt(firstNumber);
                     break;
                 default:
                     throw new IOException("|x| Invalid option |x|");
