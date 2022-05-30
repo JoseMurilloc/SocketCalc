@@ -30,9 +30,6 @@ public class Client extends JFrame implements ActionListener, KeyListener {
             int options = scanner.nextInt();
 
 
-            
-
-
             welcome();
             switch (options) {
                 case 1: {
