@@ -17,14 +17,23 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 
             Socket client;
 
+            welcome();
+
             System.out.println("*****************************************************");
             System.out.println("Digite 1 para operações básicas (+,-,*,/)");
             System.out.println("Digite 2 para demais operações (%,^,r)");
             System.out.println("*****************************************************");
 
+
+
             Scanner scanner = new Scanner(System.in);
             int options = scanner.nextInt();
 
+
+            
+
+
+            welcome();
             switch (options) {
                 case 1: {
                     System.out.println("~~ Call Server 1 ~~");
@@ -47,6 +56,18 @@ public class Client extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+    public static Process clearScreen() throws IOException {
+        return Runtime.getRuntime().exec("clear");
+    }
+
+    public static void welcome() {
+        System.out.println("   ___         _               _             _                      \n" +
+                "  / __\\  __ _ | |  ___  _   _ | |  __ _   __| |  ___   _ __   __ _  \n" +
+                " / /    / _` || | / __|| | | || | / _` | / _` | / _ \\ | '__| / _` | \n" +
+                "/ /___ | (_| || || (__ | |_| || || (_| || (_| || (_) || |   | (_| | \n" +
+                "\\____/  \\__,_||_| \\___| \\__,_||_| \\__,_| \\__,_| \\___/ |_|    \\__,_| \n" +
+                "                                                                    ");
+    }
 
     public static void tryConnectionClient(Socket client) throws IOException {
         ObjectOutputStream outputData = new ObjectOutputStream(client.getOutputStream());
