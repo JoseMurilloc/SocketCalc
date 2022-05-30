@@ -39,12 +39,33 @@ public class ServerTwo {
     }
 
     public void tryConnection(Socket socket) throws IOException {
+        double firstNumber, secondNumber;
+        double total = 0;
+        char operation;
+
         try {
             ObjectOutputStream outputData = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream inputData = new ObjectInputStream(socket.getInputStream());
 
-            String inputMessage = inputData.readUTF();
-            outputData.writeUTF("[Server two] Send message " + inputMessage);
+            firstNumber = inputData.readDouble();
+            secondNumber = inputData.readDouble();
+            operation = inputData.readChar();
+
+            switch (operation) {
+                case '%':
+                    total = ((firstNumber * secondNumber) / 100);
+                    break;
+                case '^':
+                    total = (int) Math.pow(firstNumber, secondNumber);
+                    break;
+                case 'r':
+                    total: Math.sqrt(firstNumber);
+                    break;
+                default:
+                    throw new IOException("|x| Invalid option |x|");
+            }
+
+            outputData.writeDouble(total);
             outputData.flush();
 
             inputData.close();

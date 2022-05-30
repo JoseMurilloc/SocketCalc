@@ -17,19 +17,23 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 
             Socket client;
 
-            System.out.println("Send number server");
+            System.out.println("*****************************************************");
+            System.out.println("Digite 1 para operações básicas (+,-,*,/)");
+            System.out.println("Digite 2 para demais operações (%,^,r)");
+            System.out.println("*****************************************************");
+
             Scanner scanner = new Scanner(System.in);
             int options = scanner.nextInt();
 
             switch (options) {
                 case 1: {
-                    System.out.println("~~ Server 1 start");
+                    System.out.println("~~ Call Server 1 ~~");
                     client = new Socket("127.0.1.1", 9000);
                     tryConnectionClient(client);
                     break;
                 }
                 case 2: {
-                    System.out.println("~~  Server 2 start");
+                    System.out.println("~~ Call Server 2 ~~");
                     client = new Socket("127.0.1.1", 9001);
                     tryConnectionClient(client);
                     break;
@@ -48,14 +52,43 @@ public class Client extends JFrame implements ActionListener, KeyListener {
         ObjectOutputStream outputData = new ObjectOutputStream(client.getOutputStream());
         ObjectInputStream inputData = new ObjectInputStream(client.getInputStream());
 
-        outputData.writeUTF("Client");
+        RequestClient requestClient = scannerInputUser();
+
+        outputData.writeDouble(requestClient.first);
+        outputData.writeDouble(requestClient.second);
+        outputData.writeChar(requestClient.operator);
+
         outputData.flush();
-        String messageServer = inputData.readUTF();
-        System.out.println(messageServer);
+
+        Double totalCalc = inputData.readDouble();
+        System.out.println(totalCalc);
 
         outputData.close();
         inputData.close();
         client.close();
+    }
+
+
+    public static RequestClient scannerInputUser() {
+        Scanner scanner = new Scanner(System.in);
+
+
+        System.out.println("Informe o primeiro numero");
+        double first = scanner.nextInt();
+
+        System.out.println("Informe o segundo numero");
+        double second = scanner.nextInt();
+
+        System.out.println("Qual operação desejada?");
+        char operator = scanner.next().charAt(0);
+
+        RequestClient requestClient = new RequestClient(
+                first,
+                second,
+                operator
+        );
+
+        return requestClient;
     }
 
     @Override

@@ -39,12 +39,36 @@ public class Server {
     }
 
     public void tryConnection(Socket socket) throws IOException {
+        double firstNumber, secondNumber;
+        double total = 0;
+        char operation;
+
         try {
             ObjectOutputStream outputData = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream inputData = new ObjectInputStream(socket.getInputStream());
 
-            String inputMessage = inputData.readUTF();
-            outputData.writeUTF("[Server One] Send message " + inputMessage);
+            firstNumber = inputData.readDouble();
+            secondNumber = inputData.readDouble();
+            operation = inputData.readChar();
+
+            switch (operation) {
+                case '+':
+                    total = firstNumber + secondNumber;
+                    break;
+                case '-':
+                    total = firstNumber - secondNumber;
+                    break;
+                case '*':
+                    total = firstNumber * secondNumber;
+                    break;
+                case '/':
+                    total = firstNumber / secondNumber;
+                    break;
+                default:
+                    throw new IOException("|x| Invalid option |x|");
+            }
+
+            outputData.writeDouble(total);
             outputData.flush();
 
             inputData.close();
