@@ -16,7 +16,7 @@ public class ServerTwo {
 
     public static void main(String[] args) throws IOException {
         ServerTwo server = startServer(9001);
-        System.out.println("Server start watch: " + server.port);
+        System.out.println("Server end watch: " + server.port);
     }
 
     public static ServerTwo startServer(int port) throws IOException {
